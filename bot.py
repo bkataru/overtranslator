@@ -3,6 +3,7 @@ import discord
 import subprocess
 import re
 import os
+import asyncio
 
 TOKEN = "NDQ1NTcyOTc4NzcyNTQxNDYx.DdsesQ.ZeWakXHGSPG8QX0Md_327kdA7V8"
 
@@ -21,7 +22,7 @@ async def on_message(message):
     if message.author == client.user:
         return
     if message.content.startswith('!translate'):
-        arr = ['python3.4', 'rgt.py']
+        arr = ['python3.6', 'rgt.py']
         args = message.content.split(' ')
         if message.content.find('-h') != -1 or message.content.find('--help') != -1:
             arr.append('-h')
@@ -32,13 +33,13 @@ async def on_message(message):
                 arr.append('"{}"'.format(text))
             if indexFind(args, '-n') != -1:
                 arr.append('-n')
-                arr.append(indexFind(args, '-n') + 1)
+                arr.append(str(indexFind(args, '-n') + 1))
             elif indexFind(args, '--num') != -1:
                 arr.append('-n')
-                arr.append(indexFind(args, '--num') + 1)
+                arr.append(str(indexFind(args, '--num') + 1))
                 
             if indexFind(args, '-l') != -1:
-                langs = args[indexFind(args, '-l'):]
+                langs = args[indexFind(args, '-l') + 1:]
                 arr.append('-l')
                 for elem in langs:
                     arr.append(elem)
@@ -46,7 +47,7 @@ async def on_message(message):
         result = subprocess.check_output(" ".join(arr), shell=True)
         
         await client.send_message(message.channel, result.decode())
-
+        
 @client.event
 async def on_ready():
     print('Logged in as')
