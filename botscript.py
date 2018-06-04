@@ -5,7 +5,7 @@ import os
 import asyncio
 import argparse
 from googletrans import Translator
-from . import config
+import config
 
 TOKEN = config.TOKEN
 
@@ -58,7 +58,6 @@ async def on_message(message):
         endtext = '[*] "{}" but translated {} times!'.format(text.strip(), n*len(langs)) + "\n\n"
         endtext += rgt(text, langs, n)
         print("output sent")
-        
         await client.send_message(message.channel, endtext)
         
 @client.event
