@@ -11,16 +11,10 @@ TOKEN = config.TOKEN
 
 client = discord.Client()
         
-def rgt(text, langs, times):
-	translator = Translator()
-
-	translation = text
-	for i in range(times):
-		for lang in langs:
-			translation = translator.translate(translation, dest=lang).text
-		translation = translator.translate(translation, dest='en').text
-
-	return translation
+	
+@client.event
+async def on_error(event, *args, **kwargs):
+    print("Error?")
 
 @client.event
 async def on_message(message):
@@ -55,10 +49,22 @@ async def on_message(message):
             langs = default=['de', 'ko', 'la', 'ja', 'eo']
         if len(text) == 0:
             text = "no text"
-        endtext = '[*] "{}" but translated {} times!'.format(text.strip(), n*len(langs)) + "\n\n"
-        endtext += rgt(text, langs, n)
-        print("output sent")
-        await client.send_message(message.channel, endtext)
+       
+        client.loop.create_task(background_translate(message.channel, text, langs, n)) 
+        
+async def background_translate(channel, text, langs, times):
+    await client.wait_until_ready()
+    #channel = discord.Object(id=channel)
+    translator = Translator()
+    translation = text
+    for i in range(times):
+        for lang in langs:
+            translation = translator.translate(translation, dest=lang).text
+        translation = translator.translate(translation, dest='en').text
+		
+    endtext = '[*] "{}" but translated {} times!'.format(text.strip(), times*len(langs)) + "\n\n" + translation
+    print("output sent")
+    await client.send_message(channel, endtext)
         
 @client.event
 async def on_ready():
