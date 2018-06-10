@@ -5,8 +5,6 @@ import re
 import os
 import asyncio
 
-TOKEN = "NDQ1NTcyOTc4NzcyNTQxNDYx.DdsesQ.ZeWakXHGSPG8QX0Md_327kdA7V8"
-
 client = discord.Client()
 
 def indexFind(checklist, element):
