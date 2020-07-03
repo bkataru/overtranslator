@@ -18,7 +18,7 @@ pyparsing==2.0.1
 python-apt==0.9.3.5ubuntu2
 python-dateutil==2.0
 pytz==2012c
-requests==2.2.1
+requests==2.20.0
 scipy==0.13.3
 simplegeneric==0.8.1
 six==1.5.2
