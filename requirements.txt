@@ -24,6 +24,6 @@ simplegeneric==0.8.1
 six==1.5.2
 tornado==3.1.1
 unattended-upgrades==0.1
-urllib3==1.7.1
+urllib3==1.24.2
 websockets==3.4
 wheel==0.24.0
