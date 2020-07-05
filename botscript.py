@@ -1,4 +1,4 @@
-import re
+import os, re
 
 from discord.ext import commands
 from googletrans import Translator
@@ -6,7 +6,11 @@ from googletrans import Translator
 import config
 import utils
 
-TOKEN = config.TOKEN
+try:
+    TOKEN = config.TOKEN
+except:
+    TOKEN = os.environ.get("TOKEN")
+    
 HELP_TEXT = utils.HELP_TEXT
 
 client = commands.Bot(command_prefix='!')
