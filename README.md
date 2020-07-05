@@ -11,16 +11,17 @@ Inspired by the following _meme_-videos.
 ## Usage
 
 ```
+Translate text repeatedly using Google Translate. For the keks and memes. Originally by SkullTech. Made into a Discord bot by BK Modding
+
 usage: !translate [-h] (-t TEXT) [-n NUM] [-l LANGS [LANGS ...]]
 
-Translate text repeatedly using Google Translate. For the keks and memes. Made into a Discord bot by BK Modding
+required arguments:
+-t TEXT, Input text (in quotations)
 
 optional arguments:
--h, --help            show this help message and exit
--t TEXT, --text TEXT  Input text (int double quotes)
--n NUM, --num NUM     Number of time to go through the languages.
--l LANGS [LANGS ...], --langs LANGS ['de', 'ko', 'la', 'ja', 'eo'] (the language argv should always be at the end)
-                        ISO 639-1 codes of the languages to use.
+-h HELP, Show this help message and exit
+-n NUM,  Number of time to go through the languages.
+-l LANGS [LANGS ...], ISO 639-1 codes of the languages to use.
 ```
 
 The default values of the optional arguments are
@@ -50,7 +51,7 @@ Your sweater is already spaghetti to celebrate your mother.
 
 ## Requirements for development 
 ```
-Python 3.6
-Python 3.4
-googletrans module
+Python 3.8.3
+discord.py
+googletrans
 ```
