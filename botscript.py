@@ -9,16 +9,16 @@ from discord.ext import commands
 from googletrans import Translator
 
 import config
+import utils
 
 TOKEN = config.TOKEN
+HELP_TEXT = utils.HELP_TEXT
 
 client = commands.Bot(command_prefix='!')
 
 @client.event
 async def on_error(event, *args, **kwargs):
     print("Error?")
-    
-async translate()
 
 async def background_translate(text, langs, times):
     translator = Translator()
@@ -58,6 +58,10 @@ async def translate(ctx):
     print("New message received")
     
     for arg in args:
+        if arg.startswith('h'):
+            print("Help information requested")
+            return await ctx.send(HELP_TEXT)
+        
         if arg.startswith('l'):
             langs = arg.split(' ')[1:]
             if len(langs) == 0:

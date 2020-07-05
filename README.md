@@ -22,12 +22,11 @@ optional arguments:
 -h HELP, Show this help message and exit
 -n NUM,  Number of time to go through the languages.
 -l LANGS [LANGS ...], ISO 639-1 codes of the languages to use.
-```
 
 The default values of the optional arguments are
-
     * NUM 10
     * LANGS ['de', 'ko', 'la', 'ja', 'eo']
+```
 
 A simple use-case can be as follows
 ```Discord:
