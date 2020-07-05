@@ -56,38 +56,36 @@ async def translate(ctx):
     for arg in args:
         if arg.startswith('h'):
             print("Help information requested")
+            
             return await ctx.send(HELP_TEXT)
-        
         if arg.startswith('l'):
             langs = arg.split(' ')[1:]
             if len(langs) == 0:
                 return await ctx.send("Invalid language codes (-l): {}".format(message.content))
             
-            print("Languages: {}".format(langs))
         if arg.startswith('n'):
             try:
                 n = int(arg.split(' ')[1])
             except ValueError:
                 return await ctx.send("Invalid no. of translations (-n): {}".format(message.content))
             
-            print("No. of translations: {}".format(n))
         if arg.startswith('t'):
             try:
                 text = re.findall(r'"([^"]*)"', arg)[0] # regex for life
             except:
                 return await ctx.send("Error in the text (-t): {}".format(message.content))
             
-            print("Translation text: {}".format(text))
-            
     if n == -1:
-        n = 10   
+        n = 10
     if len(langs) == 0:
         langs = ['de', 'ko', 'la', 'ja', 'eo'] # default
     if len(text) == 0:
         return await ctx.send("No text provided (-t): {}".format(message.content))
     
-    print(text, langs, n)
-    
+    print("Languages: {}".format(langs))
+    print("No. of iterations: {}".format(n))
+    print("Text to be translated: {}".format(text))
+
     translated = await background_translate(text, langs, n)
     
     await ctx.send(translated)
