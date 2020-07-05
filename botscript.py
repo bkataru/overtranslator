@@ -1,10 +1,6 @@
-import subprocess
 import re
-import os
 import asyncio
-import argparse
 
-from discord import Client
 from discord.ext import commands
 from googletrans import Translator
 

@@ -55,3 +55,13 @@ Python 3.8.3
 discord.py
 googletrans
 ```
+
+## Running the bot
+1. Create a `config.py` and add a discord bot token via a `TOKEN` variable
+    ```
+    TOKEN = "*token goes here*"
+    ```
+2. Start the bot by running `botscript.py`
+    ```
+    python3 botscript.py
+    ```
