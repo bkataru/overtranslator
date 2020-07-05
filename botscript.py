@@ -3,10 +3,10 @@ import os, re
 from discord.ext import commands
 from googletrans import Translator
 
-import config
 import utils
 
 try:
+    import config
     TOKEN = config.TOKEN
 except:
     TOKEN = os.environ.get("TOKEN")
