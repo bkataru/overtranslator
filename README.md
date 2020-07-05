@@ -11,7 +11,8 @@ Inspired by the following _meme_-videos.
 ## Usage
 
 ```
-Translate text repeatedly using Google Translate. For the keks and memes. Originally by SkullTech. Made into a Discord bot by BK Modding
+Translate text repeatedly using Google Translate. For the keks and memes. 
+Originally by SkullTech. Made into a Discord bot by BK Modding
 
 usage: !translate [-h] (-t TEXT) [-n NUM] [-l LANGS [LANGS ...]]
 
