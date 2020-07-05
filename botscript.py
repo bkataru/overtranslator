@@ -25,7 +25,7 @@ async def background_translate(text, langs, times):
             count += 1
             translation = translator.translate(translation, dest=lang).text
         translation = translator.translate(translation, dest='en').text
-
+    
     print("Count: {}".format(count))
     
     endtext = '[*] "{}" but translated {} times!'.format(text.strip(), times*len(langs)) + "\n\n" + translation
@@ -51,7 +51,7 @@ async def translate(ctx):
     text = ""
     
     print("=" * 50)
-    print("New message received")
+    print("New request received")
     
     for arg in args:
         if arg.startswith('h'):
