@@ -1,5 +1,4 @@
 import re
-import asyncio
 
 from discord.ext import commands
 from googletrans import Translator
