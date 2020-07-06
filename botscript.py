@@ -10,27 +10,24 @@ try:
     TOKEN = config.TOKEN
 except:
     TOKEN = os.environ.get("TOKEN")
-    
+
 HELP_TEXT = utils.HELP_TEXT
 
 client = commands.Bot(command_prefix='!')
+
+translator = Translator()
 
 @client.event
 async def on_error(event, *args, **kwargs):
     print("Error?")
 
 async def background_translate(text, langs, times):
-    translator = Translator()
     translation = text
-    count = 0
     for i in range(times):
         for lang in langs:
-            count += 1
             translation = translator.translate(translation, dest=lang).text
         translation = translator.translate(translation, dest='en').text
-    
-    print("Count: {}".format(count))
-    
+
     endtext = '[*] "{}" but translated {} times!'.format(text.strip(), times*len(langs)) + "\n\n" + translation
     print("Output ready: {}".format(endtext))
     
