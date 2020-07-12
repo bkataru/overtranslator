@@ -21,7 +21,7 @@ translator = Translator()
 async def on_error(event, *args, **kwargs):
     print("Error?")
 
-async def background_translate(text, langs, times):
+async def background_translate(ctx, text, langs, times):
     translation = text
     for i in range(times):
         for lang in langs:
@@ -31,7 +31,7 @@ async def background_translate(text, langs, times):
     endtext = '[*] "{}" but translated {} times!'.format(text.strip(), times*len(langs)) + "\n\n" + translation
     print("Output ready: {}".format(endtext))
     
-    return endtext
+    await ctx.send(endtext)
 
 @client.command()
 async def translate(ctx):
@@ -86,9 +86,7 @@ async def translate(ctx):
     print("No. of iterations: {}".format(n))
     print("Text to be translated: {}".format(text))
 
-    translated = await background_translate(text, langs, n)
-    
-    await ctx.send(translated)
+    await background_translate(ctx, text, langs, n)
     
 @client.event
 async def on_ready():
