@@ -10,9 +10,9 @@ Inspired by the following _meme_-videos.
 
 ## Improvements and Changes
 
-- Translation workflow is much faster after 
+- Translation workflow is much faster after: 
    - Changing the argument parsing to take on a priority-based conditional check instead of an equivalent iterative loop-based check.
-   - Fixed the translation process to be correctly asynchronous.
+   - Fixed the translation function call to be correctly asynchronous.
 - Help text updated to include more information.
 - No need to enclose text in quotations anymore.
 - Bot doesn't break if you include quotations (",') or hiphens (-) in the text now.
