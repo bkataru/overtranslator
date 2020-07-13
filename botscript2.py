@@ -1,4 +1,4 @@
-import os, re
+import os, re, shlex
 
 from discord.ext import commands
 from googletrans import Translator
@@ -21,6 +21,13 @@ translator = Translator()
 async def on_error(event, *args, **kwargs):
     print("Error?")
 
+def find_in_list(lis, char):
+    try:
+        char_ind = lis.index(char)
+        return char_ind
+    except ValueError:
+        return -1
+
 async def background_translate(ctx, text, langs, times):
     translation = text
     for i in range(times):
@@ -41,13 +48,22 @@ async def translate(ctx):
     if message.author == client.user:
         return
     
-    message.content = '{}'.format(message.content)
+    request = '{}'.format(message.content)
     
-    request = message.content.split("!translate")[1].strip()
+    args = shlex.split(request)
     
-    t_ind = request.find("-t")
-    text = request[t_ind+2:].strip()
-    options_str = request[:t_ind].strip()
+    l_ind = find_in_list(args, "-l")
+    n_ind = find_in_list(args, "-n")
+    t_ind = find_in_list(args, "-t")
+    h_ind = find_in_list(args, "-h")
+    
+    if h_ind != -1:
+        print("Help information requested")
+            
+        return await ctx.send(HELP_TEXT)
+    
+    if t_ind == -1 or len(args[t_ind+1:]) == 0:
+        return await ctx.send("No text provided (-t): {}".format(request))
     
     print(text)
     

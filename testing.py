@@ -1,11 +1,35 @@
 import re
 import sys
+import shlex
 
 def ex():
     sys.exit()
 
-request = '!translate -l de ko ja -n 50 -t kee-po'
+def find_in_list(lis, char):
+    try:
+        char_ind = lis.index(char)
+        return char_ind
+    except ValueError:
+        return -1
+
+request = '!translate -l de ko ja -n 50 kee-po'
 request = '{}'.format(request)
+
+args = shlex.split(request)
+
+l_ind = find_in_list(args, "-l")
+n_ind = find_in_list(args, "-n")
+t_ind = find_in_list(args, "-t")
+h_ind = find_in_list(args, "-h")
+
+if h_ind != -1:
+    print("Help information requested")
+    
+
+
+print(args)
+
+ex()
 
 request = request.split('!translate')[1].strip()
 
@@ -39,6 +63,7 @@ for arg in args:
         except ValueError:
             # return await ctx.send("Invalid no. of translations (-n): {}".format(message.content))
             print("Invalid no. of translations (-n): {}".format(request))
+
             
 print("*" * 20)
 print("Languages: {}".format(langs))
