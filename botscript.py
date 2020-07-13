@@ -92,7 +92,7 @@ async def translate(ctx):
         
         langs = args[l_ind+1:ind]
         
-        if len(langs) == 0: # also do check if codes are part of ISO standard
+        if len(langs) == 0:
             print("E - No language codes provided (-l), please refer to the help command (-h) for valid codes : {}".format(request))
             return await ctx.send("Error - No language codes provided (-l), please refer to the help command (-h) for valid codes : {}".format(request))
         
