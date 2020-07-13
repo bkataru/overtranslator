@@ -16,7 +16,7 @@ NOTE: All optional arguments must come before the TEXT argument (-t)
 
 The default values of the optional arguments are
     * NUM 10
-    * LANGS ['de', 'ko', 'la', 'ja', 'eo']
+    * LANGS de ko la ja eo
     
 NOTE: total number of translations is NUM * LANGS
 
