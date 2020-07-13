@@ -60,7 +60,7 @@ Nikel-spaghete water (water spaghetti nickel) is solved.
 ```
 
 A more involved use-case which uses all the available arguments.
-```Discor
+```Discord
 !translate -n 10 -l de ko hi -t "There's vomit on his sweater already, mom's spaghetti"
 
 Output:
