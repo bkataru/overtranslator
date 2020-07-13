@@ -12,7 +12,7 @@ def find_in_list(lis, char):
     except ValueError:
         return -1
 
-request = '!translate -l de ko ja -n 50 kee-po'
+request = '!translate -l de ko ja -n 50 -t did you ever hear the tragedy of darth,  plagueis the wise?'
 request = '{}'.format(request)
 
 args = shlex.split(request)
@@ -25,6 +25,7 @@ h_ind = find_in_list(args, "-h")
 if h_ind != -1:
     print("Help information requested")
     
+print(" ".join(args[t_ind+1:]))
 
 
 print(args)

@@ -43,12 +43,14 @@ async def background_translate(ctx, text, langs, times):
 @client.command()
 async def translate(ctx):
     message = ctx.message
-    
     # do not want the bot to reply to itself so
     if message.author == client.user:
         return
     
     request = '{}'.format(message.content)
+    
+    print("=" * 50)
+    print("New request received")
     
     args = shlex.split(request)
     
@@ -59,23 +61,38 @@ async def translate(ctx):
     
     if h_ind != -1:
         print("Help information requested")
-            
         return await ctx.send(HELP_TEXT)
     
     if t_ind == -1 or len(args[t_ind+1:]) == 0:
         return await ctx.send("No text provided (-t): {}".format(request))
     
-    print(text)
+    text = " ".join(args[t_ind+1:])
     
-    args = options_str.split('-')[1:]
-    args = [arg.strip() for arg in args]
+    if max(l_ind, n_ind, t_ind) != t_ind:
+        return await ctx.send("Optional arguments (-l,-n) should be positioned before the text argument (-t): {}".format(request))
     
-    langs = []
-    n = -1
+    if l_ind != -1:
+        langs = []
+    if n_ind != -1:
+        n = -1
     
-    print("=" * 50)
-    print("New request received")
+    try:
+        n = int(args[n_ind+1])
+    except ValueError:
+        return await ctx.send("Invalid no. of translations (-n): {}".format(request))
     
+    ind = l_ind
+    elem_range = 0
+    while not ind in (n_ind, t_ind, h_ind):
+        elem_range += 1
+        ind += 1
+        
+    langs = args[l_ind:l_ind+elem_range+1]
+    
+    if len(langs) == 0:
+        return await ctx.send("Invalid language codes (-l): {}".format(message.content))
+            
+        
     for arg in args:
         if arg.startswith('h'):
             print("Help information requested")
