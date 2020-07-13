@@ -8,6 +8,16 @@ Inspired by the following _meme_-videos.
 - [Gucci Gang but it's been Google translated over 500 times](https://youtu.be/HMReGXCtTiM)
 - [Pumped Up Kicks but it's been Google translated](https://youtu.be/ZMR395zmT1k)
 
+## Improvements and Changes
+
+- Translation workflow is much faster after 
+   - Changing the argument parsing to take on a priority-based conditional check instead of an equivalent iterative loop-based check.
+   - Fixed the translation process to be correctly asynchronous.
+- Help text updated to include more information.
+- No need to enclose text in quotations anymore.
+- Bot doesn't break if you include quotations (",') or hiphens (-) in the text now.
+- Optional arguments must come before the text argument now.
+
 ## Usage
 
 ```
