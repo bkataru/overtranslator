@@ -17,7 +17,7 @@ Originally by SkullTech. Made into a Discord bot by BK Modding
 Usage: !translate [-h] [-n NUM] [-l LANGS [LANGS ...]] (-t TEXT)
 
 Required arguments:
--t TEXT, Input text (in quotations)
+-t TEXT, Input text
 
 Optional arguments:
 -h HELP, Show this help message and exit
