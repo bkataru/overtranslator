@@ -51,6 +51,8 @@ async def translate(ctx):
     print("=" * 50)
     print("S - New request received")
     
+    await ctx.send("Translation request received (⌐■_■)")
+    
     args = shlex.split(request)
     
     l_ind = find_in_list(args, "-l")
