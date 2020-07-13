@@ -71,8 +71,8 @@ Your sweater is already spaghetti to celebrate your mother.
 
 ## Requirements for development 
 ```
-Python 3.8.3
-discord.py
+Python 3
+discord.py v1.0+
 googletrans
 ```
 
