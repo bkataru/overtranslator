@@ -51,8 +51,6 @@ async def translate(ctx):
     print("=" * 50)
     print("S - New request received")
     
-    await ctx.send("Translation request received (⌐■_■)")
-    
     args = shlex.split(request)
     
     l_ind = find_in_list(args, "-l")
@@ -63,6 +61,8 @@ async def translate(ctx):
     if h_ind != -1:
         print("S - Help information requested")
         return await ctx.send(HELP_TEXT)
+    
+    await ctx.send("Translation request received (⌐■_■)")
     
     if t_ind == -1 or len(args[t_ind+1:]) == 0:
         print("E - No text provided (-t): {}".format(request))
@@ -93,9 +93,16 @@ async def translate(ctx):
         langs = args[l_ind+1:ind]
         
         if len(langs) == 0: # also do check if codes are part of ISO standard
-            print("E - Invalid language codes (-l), please refer to the help command (-h) for valid codes : {}".format(request))
-            return await ctx.send("Error - Invalid language codes (-l), please refer to the help command (-h) for valid codes : {}".format(request))
-    
+            print("E - No language codes provided (-l), please refer to the help command (-h) for valid codes : {}".format(request))
+            return await ctx.send("Error - No language codes provided (-l), please refer to the help command (-h) for valid codes : {}".format(request))
+        
+        invalid = [lang for lang in langs if not lang in list(LANGCODES.values())]
+        
+        if len(invalid) != 0:
+            print("E - Invalid language code(s) provided (-l): {}. Please refer to the help command (-h) for valid codes: {}".format(" ".join(invalid), request))
+            return await ctx.send("Error - Invalid language code(s) provided (-l): {}. Please refer to the help command (-h) for valid codes: {}".format(" ".join(invalid), request))
+        
+        
     print("S - Languages: {}".format(langs))
     print("S - No. of iterations: {}".format(n))
     print("S - Text to be translated: {}".format(text))
