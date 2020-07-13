@@ -1,7 +1,7 @@
-import os, re
+import os, re, shlex
 
 from discord.ext import commands
-from googletrans import Translator
+from googletrans import Translator, LANGCODES
 
 import utils
 
@@ -10,7 +10,6 @@ try:
     TOKEN = config.TOKEN
 except:
     TOKEN = os.environ.get("TOKEN")
-
 HELP_TEXT = utils.HELP_TEXT
 
 client = commands.Bot(command_prefix='!')
@@ -19,7 +18,14 @@ translator = Translator()
 
 @client.event
 async def on_error(event, *args, **kwargs):
-    print("Error?")
+    print("Internal Error :(")
+
+def find_in_list(lis, char):
+    try:
+        char_ind = lis.index(char)
+        return char_ind
+    except ValueError:
+        return -1
 
 async def background_translate(ctx, text, langs, times):
     translation = text
@@ -29,71 +35,77 @@ async def background_translate(ctx, text, langs, times):
         translation = translator.translate(translation, dest='en').text
 
     endtext = '[*] "{}" but translated {} times!'.format(text.strip(), times*len(langs)) + "\n\n" + translation
-    print("Output ready: {}".format(endtext))
+    print("S - Output ready: {}".format(endtext))
     
     await ctx.send(endtext)
 
 @client.command()
 async def translate(ctx):
     message = ctx.message
-    
     # do not want the bot to reply to itself so
     if message.author == client.user:
         return
     
-    message.content = '{}'.format(message.content)
-    
-    request = message.content.split("!translate")[1].strip()
-    
-    t_ind = request.find("-t")
-    text = request[t_ind+2:].strip()
-    options_str = request[:t_ind].strip()
-    
-    print(text)
-    
-    args = options_str.split('-')[1:]
-    args = [arg.strip() for arg in args]
-    
-    langs = []
-    n = -1
+    request = '{}'.format(message.content)
     
     print("=" * 50)
-    print("New request received")
+    print("S - New request received")
     
-    for arg in args:
-        if arg.startswith('h'):
-            print("Help information requested")
-            
-            return await ctx.send(HELP_TEXT)
-        if arg.startswith('l'):
-            langs = arg.split(' ')[1:]
-            if len(langs) == 0:
-                return await ctx.send("Invalid language codes (-l): {}".format(message.content))
-            
-        if arg.startswith('n'):
-            try:
-                n = int(arg.split(' ')[1])
-            except ValueError:
-                return await ctx.send("Invalid no. of translations (-n): {}".format(message.content))
-        
-    if n == -1:
+    args = shlex.split(request)
+    
+    l_ind = find_in_list(args, "-l")
+    n_ind = find_in_list(args, "-n")
+    t_ind = find_in_list(args, "-t")
+    h_ind = find_in_list(args, "-h")
+    
+    if h_ind != -1:
+        print("S - Help information requested")
+        return await ctx.send(HELP_TEXT)
+    
+    if t_ind == -1 or len(args[t_ind+1:]) == 0:
+        print("E - No text provided (-t): {}".format(request))
+        return await ctx.send("Error - No text provided (-t): {}".format(request))
+    
+    text = " ".join(args[t_ind+1:])
+    
+    if max(l_ind, n_ind, t_ind) != t_ind:
+        print("E - Optional arguments (-l,-n) should be positioned before the text argument (-t): {}".format(request))
+        return await ctx.send("Error - Optional arguments (-l,-n) should be positioned before the text argument (-t): {}".format(request))
+    
+    if n_ind == -1:
         n = 10
-    if len(langs) == 0:
-        langs = ['de', 'ko', 'la', 'ja', 'eo'] # default
-    if len(text) == 0:
-        return await ctx.send("No text provided (-t): {}".format(message.content))
+    else:
+        try:
+            n = int(args[n_ind+1])
+        except ValueError:
+            print("E - Invalid no. of translations (-n): {}".format(request))
+            return await ctx.send("Error - Invalid no. of translations (-n): {}".format(request))
     
-    print("Languages: {}".format(langs))
-    print("No. of iterations: {}".format(n))
-    print("Text to be translated: {}".format(text))
+    if l_ind == -1:
+        langs = ['de', 'ko', 'la', 'ja', 'eo'] # default
+    else:
+        ind = l_ind
+        while not ind in (n_ind, t_ind, h_ind):
+            ind += 1
+        
+        langs = args[l_ind+1:ind]
+        
+        if len(langs) == 0: # also do check if codes are part of ISO standard
+            print("E - Invalid language codes (-l), please refer to the help command (-h) for valid codes : {}".format(request))
+            return await ctx.send("Error - Invalid language codes (-l), please refer to the help command (-h) for valid codes : {}".format(request))
+    
+    print("S - Languages: {}".format(langs))
+    print("S - No. of iterations: {}".format(n))
+    print("S - Text to be translated: {}".format(text))
 
     await background_translate(ctx, text, langs, n)
     
 @client.event
 async def on_ready():
-    print('Logged in as')
+    print('S - Logged in as')
     print(client.user.name)
     print(client.user.id)
     print('------')
 
-client.run(TOKEN)
+if __name__ == "__main__":
+    client.run(TOKEN)

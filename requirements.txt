@@ -15,6 +15,7 @@ httpx==0.13.3
 hyperframe==5.2.0
 idna==2.10
 multidict==4.7.6
+pycountry==20.7.3
 rfc3986==1.4.0
 sniffio==1.1.0
 websockets==8.1
