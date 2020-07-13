@@ -71,50 +71,25 @@ async def translate(ctx):
     if max(l_ind, n_ind, t_ind) != t_ind:
         return await ctx.send("Optional arguments (-l,-n) should be positioned before the text argument (-t): {}".format(request))
     
-    if l_ind != -1:
-        langs = []
     if n_ind != -1:
-        n = -1
-    
-    try:
-        n = int(args[n_ind+1])
-    except ValueError:
-        return await ctx.send("Invalid no. of translations (-n): {}".format(request))
-    
-    ind = l_ind
-    elem_range = 0
-    while not ind in (n_ind, t_ind, h_ind):
-        elem_range += 1
-        ind += 1
-        
-    langs = args[l_ind:l_ind+elem_range+1]
-    
-    if len(langs) == 0:
-        return await ctx.send("Invalid language codes (-l): {}".format(message.content))
-            
-        
-    for arg in args:
-        if arg.startswith('h'):
-            print("Help information requested")
-            
-            return await ctx.send(HELP_TEXT)
-        if arg.startswith('l'):
-            langs = arg.split(' ')[1:]
-            if len(langs) == 0:
-                return await ctx.send("Invalid language codes (-l): {}".format(message.content))
-            
-        if arg.startswith('n'):
-            try:
-                n = int(arg.split(' ')[1])
-            except ValueError:
-                return await ctx.send("Invalid no. of translations (-n): {}".format(message.content))
-        
-    if n == -1:
         n = 10
-    if len(langs) == 0:
+    else:
+        try:
+            n = int(args[n_ind+1])
+        except ValueError:
+            return await ctx.send("Invalid no. of translations (-n): {}".format(request))
+    
+    if l_ind != -1:
         langs = ['de', 'ko', 'la', 'ja', 'eo'] # default
-    if len(text) == 0:
-        return await ctx.send("No text provided (-t): {}".format(message.content))
+    else:
+        ind = l_ind
+        while not ind in (n_ind, t_ind, h_ind):
+            ind += 1
+            
+        langs = args[l_ind:ind]
+        
+        if len(langs) == 0: # also do check if codes are part of ISO standard
+            return await ctx.send("Invalid language codes (-l): {}".format(request))
     
     print("Languages: {}".format(langs))
     print("No. of iterations: {}".format(n))
