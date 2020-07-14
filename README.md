@@ -53,7 +53,7 @@ googletrans.LANGCODES
 
 A simple use-case can be as follows
 ```Discord:
-!translate -t "There's vomit on his sweater already, mom's spaghetti"
+!translate -t There's vomit on his sweater already, mom's spaghetti
 
 Output:
 [*] "There's vo..." but translated 50 times!
@@ -63,7 +63,7 @@ Nikel-spaghete water (water spaghetti nickel) is solved.
 
 A more involved use-case which uses all the available arguments.
 ```Discord
-!translate -n 10 -l de ko hi -t "There's vomit on his sweater already, mom's spaghetti"
+!translate -n 10 -l de ko hi -t There's vomit on his sweater already, mom's spaghetti
 
 Output:
 [*] "There's vo..." but translated 30 times!
