@@ -40,7 +40,7 @@ async def background_translate(ctx, text, langs, times):
             translation = translator.translate(translation, dest=lang).text
         translation = translator.translate(translation, dest='en').text
     
-    endtext = '[*] "{}" but translated {} times!'.format(text.strip(), times*len(langs)) + "\n" + "-" * 100 + "\n\n" + translation
+    endtext = '[*] "{}" **but translated {} times!**'.format(text.strip(), times*len(langs)) + "\n\n" + translation
     print("S - Output ready: {}".format(endtext))
     
     chunks = get_chunks(endtext, 2000)
