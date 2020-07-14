@@ -26,7 +26,7 @@ def find_in_list(lis, char):
         return char_ind
     except ValueError:
         return -1
-
+    
 async def background_translate(ctx, text, langs, times):
     translation = text
     for i in range(times):
@@ -51,7 +51,7 @@ async def translate(ctx):
     print("=" * 50)
     print("S - New request received")
     
-    args = shlex.split(request, posix=False)
+    args = request.split(" ")
     
     l_ind = find_in_list(args, "-l")
     n_ind = find_in_list(args, "-n")
@@ -71,8 +71,8 @@ async def translate(ctx):
     text = " ".join(args[t_ind+1:])
     
     if max(l_ind, n_ind, t_ind) != t_ind:
-        print("E - Optional arguments (-l,-n) should be positioned before the text argument (-t): {}".format(request))
-        return await ctx.send("Error - Optional arguments (-l,-n) should be positioned before the text argument (-t): {}".format(request))
+        print("E - Optional arguments (-l,-n) should be positioned before the text argument (-t), please refer to the help command (-h) for more info: {}".format(request))
+        return await ctx.send("Error - Optional arguments (-l,-n) should be positioned before the text argument (-t), please refer to the help command (-h) for more info: {}".format(request))
     
     if n_ind == -1:
         n = 10
@@ -80,8 +80,8 @@ async def translate(ctx):
         try:
             n = int(args[n_ind+1])
         except ValueError:
-            print("E - Invalid no. of translations (-n): {}".format(request))
-            return await ctx.send("Error - Invalid no. of translations (-n): {}".format(request))
+            print("E - Invalid no. of translations (-n), please refer to the help command (-h) for more info: {}".format(request))
+            return await ctx.send("Error - Invalid no. of translations (-n), please refer to the help command (-h) for more info: {}".format(request))
     
     if l_ind == -1:
         langs = ['de', 'ko', 'la', 'ja', 'eo'] # default
