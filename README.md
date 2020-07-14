@@ -3,23 +3,14 @@
 <br> <br> <br> <br>
 
 ## What is this and how is this useful?!
-This script uses the advanced mind of Google Translate to figure out the hidden meanings behind ordinary english text.
+This bot uses the big brain of Google Translate to figure out the hidden meanings behind ordinary english text.
 Inspired by the following _meme_-videos.
 
 - [Gucci Gang but it's been Google translated over 500 times](https://youtu.be/HMReGXCtTiM)
 - [Pumped Up Kicks but it's been Google translated](https://youtu.be/ZMR395zmT1k)
 
-## Improvements and Changes
-
-- Translation workflow is much faster after: 
-   - Changing the argument parsing to take on a priority-based conditional check instead of an equivalent iterative loop-based check.
-   - Fixed the translation function call to be correctly asynchronous.
-- Help text updated to include more information.
-- No need to enclose text in quotations anymore.
-- Bot doesn't break if you include quotations (",') or hiphens (-) in the text now.
-- Optional arguments must come before the text argument now.
-
 ## Usage
+<img src="https://i.imgur.com/99ZJij5.png">
 
 ```
 Translate text repeatedly using Google Translate. For the keks and memes. 
@@ -79,6 +70,17 @@ Output:
 
 Your sweater is already spaghetti to celebrate your mother.
 ```
+
+## Improvements and Changes
+
+- Translation workflow is much faster after: 
+   - Changing the argument parsing to take on a priority-based conditional check instead of an equivalent iterative loop-based check.
+   - Fixed the translation function call to be correctly asynchronous.
+- Help text updated to include more information.
+- No need to enclose text in quotations anymore.
+- Bot doesn't break if you include quotations (",') or hiphens (-) in the text now.
+- Optional arguments must come before the text argument now.
+- Accounted for the Bot's reply being longer than Discord's character limit (2000).
 
 ## Requirements for development 
 ```
