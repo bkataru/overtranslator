@@ -56,7 +56,8 @@ A simple use-case can be as follows
 !translate -t There's vomit on his sweater already, mom's spaghetti
 
 Output:
-[*] "There's vo..." but translated 50 times!
+[*] "There's vomit on his sweater already, mom's spaghetti" but translated 50 times!
+
 
 Nikel-spaghete water (water spaghetti nickel) is solved.
 ```
@@ -66,7 +67,8 @@ A more involved use-case which uses all the available arguments.
 !translate -n 10 -l de ko hi -t There's vomit on his sweater already, mom's spaghetti
 
 Output:
-[*] "There's vo..." but translated 30 times!
+[*] "There's vomit on his sweater already, mom's spaghetti" but translated 30 times!
+
 
 Your sweater is already spaghetti to celebrate your mother.
 ```
@@ -81,7 +83,6 @@ Your sweater is already spaghetti to celebrate your mother.
 - Bot doesn't break if you include quotations (",') or hiphens (-) in the text now.
 - Optional arguments must come before the text argument now.
 - Accounted for the Bot's reply being longer than Discord's character limit (2000).
-- Truncated long input texts (> than 500 chars) when displaying the input preview in the result.
 
 ## Requirements for development 
 ```
