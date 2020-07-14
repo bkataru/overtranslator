@@ -1,5 +1,6 @@
 # translator-bot
-A discord bot that translates a given text repeatedly using Google Translate. For the keks and memes. Originally a Python script by SkullTech, made into a Python Discord bot by BKModding
+<img align="left" src="https://i.imgur.com/yo0W0R8.png"> A discord bot that translates a given text repeatedly using Google Translate. For the keks and memes. Originally a Python script by SkullTech, made into a Python Discord bot by BKModding
+<br> <br> <br> <br>
 
 ## What is this and how is this useful?!
 This script uses the advanced mind of Google Translate to figure out the hidden meanings behind ordinary english text.
