@@ -1,4 +1,4 @@
-import os, re, shlex
+import os
 
 from discord.ext import commands
 from googletrans import Translator, LANGCODES
@@ -39,7 +39,7 @@ async def background_translate(ctx, text, langs, times):
         for lang in langs:
             translation = translator.translate(translation, dest=lang).text
         translation = translator.translate(translation, dest='en').text
-
+    
     endtext = '[*] "{}" but translated {} times!'.format(text.strip(), times*len(langs)) + "\n\n" + translation
     print("S - Output ready: {}".format(endtext))
     
