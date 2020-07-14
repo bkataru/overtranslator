@@ -16,16 +16,22 @@ client = commands.Bot(command_prefix='!')
 
 translator = Translator()
 
-@client.event
-async def on_error(event, *args, **kwargs):
-    print("Internal Error :(")
-
 def find_in_list(lis, char):
     try:
         char_ind = lis.index(char)
         return char_ind
     except ValueError:
         return -1
+    
+# https://stackoverflow.com/a/57023599/7856040
+def get_chunks(s, maxlength):
+    start = 0
+    end = 0
+    while start + maxlength  < len(s) and end != -1:
+        end = s.rfind(" ", start, start + maxlength + 1)
+        yield s[start:end]
+        start = end +1
+    yield s[start:]
     
 async def background_translate(ctx, text, langs, times):
     translation = text
@@ -37,18 +43,9 @@ async def background_translate(ctx, text, langs, times):
     endtext = '[*] "{}" but translated {} times!'.format(text.strip(), times*len(langs)) + "\n\n" + translation
     print("S - Output ready: {}".format(endtext))
     
-    num_replies = len(endtext) // 2000
-    rem = len(endtext) % 2000
-    if num_replies == 0:
-        await ctx.send(endtext)
-    else:
-        c_pointer = 0
-        for n in range(num_replies):
-            await ctx.send(endtext[c_pointer:c_pointer+2000])
-            c_pointer += 2000
-        
-        # send the remaining text
-        await ctx.send(endtext[c_pointer:c_pointer+rem])
+    chunks = get_chunks(endtext, 2000)
+    for chunk in chunks:
+        await ctx.send(chunk)
 
 @client.command()
 async def translate(ctx):
@@ -126,6 +123,10 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
+    
+@client.event
+async def on_error(event, *args, **kwargs):
+    print("Internal Error :(")
 
 if __name__ == "__main__":
     client.run(TOKEN)
