@@ -81,6 +81,7 @@ Your sweater is already spaghetti to celebrate your mother.
 - Bot doesn't break if you include quotations (",') or hiphens (-) in the text now.
 - Optional arguments must come before the text argument now.
 - Accounted for the Bot's reply being longer than Discord's character limit (2000).
+- Truncated long input texts (> than 500 chars) when displaying the input preview in the result.
 
 ## Requirements for development 
 ```
