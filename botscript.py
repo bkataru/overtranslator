@@ -37,7 +37,18 @@ async def background_translate(ctx, text, langs, times):
     endtext = '[*] "{}" but translated {} times!'.format(text.strip(), times*len(langs)) + "\n\n" + translation
     print("S - Output ready: {}".format(endtext))
     
-    await ctx.send(endtext)
+    num_replies = len(endtext) // 2000
+    rem = len(endtext) % 2000
+    if num_replies == 0:
+        await ctx.send(endtext)
+    else:
+        c_pointer = 0
+        for n in range(num_replies):
+            await ctx.send(endtext[c_pointer:c_pointer+2000])
+            c_pointer += 2000
+        
+        # send the remaining text
+        await ctx.send(endtext[c_pointer:c_pointer+rem])
 
 @client.command()
 async def translate(ctx):
