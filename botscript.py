@@ -1,6 +1,7 @@
 import os
 
 from discord.ext import commands
+from discord import Activity, ActivityType
 from googletrans import Translator, LANGCODES
 
 import utils
@@ -71,6 +72,8 @@ async def translate(ctx):
         return await ctx.send(HELP_TEXT)
     
     await ctx.send("Translation request received (⌐■_■)")
+
+
     
     if t_ind == -1 or len(args[t_ind+1:]) == 0:
         print("E - No text provided (-t): {}".format(request))
@@ -122,7 +125,12 @@ async def on_ready():
     print('S - Logged in as')
     print(client.user.name)
     print(client.user.id)
+
+    server_listing = ", ".join([server.name for server in client.guilds])
+    print("S - Active in {} servers: {}".format(len(client.guilds), server_listing))
     print('------')
+
+    await client.change_presence(activity=Activity(type=ActivityType.watching, name="for !translate -h"))
     
 @client.event
 async def on_error(event, *args, **kwargs):
