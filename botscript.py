@@ -56,6 +56,9 @@ async def translate(ctx):
         return
     
     request = '{}'.format(message.content)
+    request = request.split("!translate ")[1]
+
+    print("Request: {}".format(request))
     
     print("=" * 50)
     print("S - New request received")
@@ -73,46 +76,50 @@ async def translate(ctx):
     
     await ctx.send("Translation request received (⌐■_■)")
 
+    if max(t_ind, l_ind, n_ind) == -1:
+        text = request
 
-    
-    if t_ind == -1 or len(args[t_ind+1:]) == 0:
-        print("E - No text provided (-t): {}".format(request))
-        return await ctx.send("Error - No text provided (-t): {}".format(request))
-    
-    text = " ".join(args[t_ind+1:])
-    
-    if max(l_ind, n_ind, t_ind) != t_ind:
-        print("E - Optional arguments (-l,-n) should be positioned before the text argument (-t), please refer to the help command (-h) for more info: {}".format(request))
-        return await ctx.send("Error - Optional arguments (-l,-n) should be positioned before the text argument (-t), please refer to the help command (-h) for more info: {}".format(request))
-    
-    if n_ind == -1:
         n = 10
-    else:
-        try:
-            n = int(args[n_ind+1])
-        except ValueError:
-            print("E - Invalid no. of translations (-n), please refer to the help command (-h) for more info: {}".format(request))
-            return await ctx.send("Error - Invalid no. of translations (-n), please refer to the help command (-h) for more info: {}".format(request))
-    
-    if l_ind == -1:
         langs = ['de', 'ko', 'la', 'ja', 'eo'] # default
     else:
-        ind = l_ind
-        while not ind in (n_ind, t_ind, h_ind):
-            ind += 1
+        if t_ind == -1 or len(args[t_ind+1:]) == 0:
+            print("E - No text provided (-t): {}".format(request))
+            return await ctx.send("Error - No text provided (-t): {}".format(request))
         
-        langs = args[l_ind+1:ind]
+        text = " ".join(args[t_ind+1:])
         
-        if len(langs) == 0:
-            print("E - No language codes provided (-l), please refer to the help command (-h) for valid codes : {}".format(request))
-            return await ctx.send("Error - No language codes provided (-l), please refer to the help command (-h) for valid codes : {}".format(request))
+        if max(l_ind, n_ind, t_ind) != t_ind:
+            print("E - Optional arguments (-l,-n) should be positioned before the text argument (-t), please refer to the help command (-h) for more info: {}".format(request))
+            return await ctx.send("Error - Optional arguments (-l,-n) should be positioned before the text argument (-t), please refer to the help command (-h) for more info: {}".format(request))
         
-        invalid = [lang for lang in langs if not lang in list(LANGCODES.values())]
+        if n_ind == -1:
+            n = 10
+        else:
+            try:
+                n = int(args[n_ind+1])
+            except ValueError:
+                print("E - Invalid no. of translations (-n), please refer to the help command (-h) for more info: {}".format(request))
+                return await ctx.send("Error - Invalid no. of translations (-n), please refer to the help command (-h) for more info: {}".format(request))
         
-        if len(invalid) != 0:
-            print("E - Invalid language code(s) provided (-l): {}. Please refer to the help command (-h) for valid codes: {}".format(" ".join(invalid), request))
-            return await ctx.send("Error - Invalid language code(s) provided (-l): {}. Please refer to the help command (-h) for valid codes: {}".format(" ".join(invalid), request))
-        
+        if l_ind == -1:
+            langs = ['de', 'ko', 'la', 'ja', 'eo'] # default
+        else:
+            ind = l_ind
+            while not ind in (n_ind, t_ind, h_ind):
+                ind += 1
+            
+            langs = args[l_ind+1:ind]
+            
+            if len(langs) == 0:
+                print("E - No language codes provided (-l), please refer to the help command (-h) for valid codes : {}".format(request))
+                return await ctx.send("Error - No language codes provided (-l), please refer to the help command (-h) for valid codes : {}".format(request))
+            
+            invalid = [lang for lang in langs if not lang in list(LANGCODES.values())]
+            
+            if len(invalid) != 0:
+                print("E - Invalid language code(s) provided (-l): {}. Please refer to the help command (-h) for valid codes: {}".format(" ".join(invalid), request))
+                return await ctx.send("Error - Invalid language code(s) provided (-l): {}. Please refer to the help command (-h) for valid codes: {}".format(" ".join(invalid), request))
+            
         
     print("S - Languages: {}".format(langs))
     print("S - No. of iterations: {}".format(n))
