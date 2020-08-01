@@ -56,7 +56,12 @@ async def translate(ctx):
         return
     
     request = '{}'.format(message.content)
-    request = request.split("!translate ")[1]
+
+    try:
+        request = request.split("!translate ")[1]
+    except IndexError:
+        print("E - No message provided to translate, please refer to the help command (-h) for more info: {}".format(request))
+        return await ctx.send("Error - No message provided to translate, please refer to the help command (-h) for more info: {}".format(request))
 
     print("Request: {}".format(request))
     
@@ -119,8 +124,7 @@ async def translate(ctx):
             if len(invalid) != 0:
                 print("E - Invalid language code(s) provided (-l): {}. Please refer to the help command (-h) for valid codes: {}".format(" ".join(invalid), request))
                 return await ctx.send("Error - Invalid language code(s) provided (-l): {}. Please refer to the help command (-h) for valid codes: {}".format(" ".join(invalid), request))
-            
-        
+    
     print("S - Languages: {}".format(langs))
     print("S - No. of iterations: {}".format(n))
     print("S - Text to be translated: {}".format(text))
