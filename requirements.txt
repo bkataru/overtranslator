@@ -13,7 +13,7 @@ hstspreload==2020.6.30
 httpcore==0.9.1
 httpx==0.13.3
 hyperframe==5.2.0
-idna==2.10
+idna==3.7
 multidict==4.7.6
 rfc3986==1.4.0
 sniffio==1.1.0
